@@ -1,0 +1,28 @@
+
+  
+  function Game() {
+  var player = new Player();
+  var object = new Object();
+   this.addController = function()
+  {
+  player.move()
+  } 
+  this.update = function()
+{
+var canvas = document.getElementById("myCanvas");
+var context = canvas.getContext("2d");  
+ context.clearRect(0, 0, 800, 400); 
+ if(player.checkCollision(object.X(),object.Y(),object.Width(),object.Height()))
+ {
+ object.hit();
+ }
+ else
+ object.reset();
+}
+  this.draw = function ()
+  {
+  player.draw();
+  object.draw();
+ }
+
+  }  
