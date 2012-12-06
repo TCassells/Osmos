@@ -3,8 +3,8 @@ function Player(){
 	this.radius = 30;
 	this.x =W/2;
 	this.y = H/2;
-	this.vx = 0.1;
-	this.vy = 0.1;
+	this.vx = 0.001;
+	this.vy = 0.001;
 	this.ax = W/2;
 	this.ay = H/2;
 	var r = 255;
@@ -32,7 +32,8 @@ ctx.beginPath();
 		this.y += this.vy* (this.ay-this.y);
 		if(this.x - this.radius < 0 || this.x +this.radius > W)  this.vx = -this.vx;
 		if(this.y-this.radius  < 0 || this.y +this.radius  > H)  this.vy = -this.vy;
-		if(this.interval > 10)
+		if(this.interval > 20)
 		this.interval = 0;
+
 }
 }

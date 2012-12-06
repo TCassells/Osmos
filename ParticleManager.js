@@ -3,6 +3,7 @@ function ParticleManager()
 var canvas = document.getElementById("myCanvas");
 var ctx = canvas.getContext("2d");
  var player = new Player();
+this.down =  false;
 var W = 1500; var H = 700;
 //Lets create an array of particles
 var particles = [];
@@ -13,32 +14,47 @@ for(var i = 0; i < 20; i++)
 var x = 100; var y = 100;
 this.movePlayer= function(x,y)
 {
+if(this.down==true)
+{
   player.ax =  x;
   player.ay =  y;
+    if(lineDistance(player.ax ,player.x,player.ay,player.y)>0)
+	{
+  player.vx+=0.01;
+   player.vy+=0.01;
+   }
+  this.down = false;
+  }
+
 }
 this.Draw = function()
 {
+  if(lineDistance(player.ax ,player.x,player.ay,player.y)<=player.radius)
+	{    player.vx=0;
+         player.vy=0;
+	}
 var radius = player.radius;
 		player.Draw();
 for(var t = 0; t < particles.length; t++)
 	{var p = particles[t];
-	 if (player.x + player.radius > p.x- p.radius && player.x-player.radius < p.x+p.radius && player.y + player.radius > p.y - p.radius && player.y - player.radius < p.y +p.radius)
+	 if (p.x + p.radius > player.x- player.radius && p.x-p.radius < player.x+player.radius && p.y + p.radius > player.y - player.radius && p.y - p.radius < player.y +player.radius)
 	 {
 	 if( player.radius >= p.radius&& p.radius >=1)
 	 {	
 	 player.radius +=1;
 	 	p.radius -=  1;
-		if(p.radius<0)
-		{
-		particles.splice(t);
-		}
+		
 	}
-	 else if(player.radius >2)
+	 else if(player.radius >6&& p.radius >=1)
 	 {
 	 	p.radius +=  1;
 		player.radius -=1;
      }
 	 }
+	 if(p.radius<0)
+		{
+		particles.splice(t);
+		}
 		for(var c = 0; c < particles.length; c++)
 		{
 		 if(t!=c)
@@ -52,14 +68,14 @@ for(var t = 0; t < particles.length; t++)
 							 {
 								p.radius +=  1;
 								 o.radius-= 1;
-								  if(o.radius<0)
-										 {
-										 particles.splice(c);
-										 }
+								
 							 }
 						}
 					}
-				
+				  if(o.radius<0)
+					{
+					particles.splice(c);
+					}
 			}
 		}
 		if(p.radius < radius)
@@ -80,7 +96,7 @@ for(var t = 0; t < particles.length; t++)
 					n.y = p.y +(p.radius*-p.vy*2);
 					n.vx = - p.vx*Math.random()*3;
 					n.vy = -p.vy*Math.random()*3;
-					n.radius =2;
+					n.radius =1;
 					p.radius -= 1;
 					particles.push(n);
 				}
@@ -91,21 +107,32 @@ for(var t = 0; t < particles.length; t++)
 		if(p.y - p.radius < 0 )  p.vy = 0.5;
 		if( p.y +p.radius > H) p.vy = -0.5;
 		p.Draw();
-		}
-if(player.interval ==10)
-			{
-			if(((player.ax - player.x)>player.radius && player.radius > 3)||(( player.ay - player.y)>player.radius&& player.radius > 3))
-			{
-				// var n = new Particle();
-					// n.x = player.x + (player.radius*- (player.vx* (player.ax-player.x)))
-					// n.y = player.y +(player.radius*-(player.vy* (player.ay-player.y)));
-					// n.vx = - player.vx*Math.random()*3;
-					// n.vy = -player.vy*Math.random()*3;
-					// n.radius =2;
-					// player.radius -= 0.1;
-					// particles.push(n);
+		}	
+            if(player.interval ==20-player.radius%4 &&player.radius > 5)
+			{	
+		
+			 if(lineDistance(player.ax ,player.x,player.ay,player.y)>radius)
+			 {
+				var n = new Particle();
+					n.x = player.x-  (radius/2)*player.vx*(player.ax-player.x);
+					n.y = player.y- (radius/2)*player.vy*(player.ay-player.y);
+					n.vx = - (player.vx)*(player.ax-player.x) ;
+					n.vy = -player.vy*(player.ay-player.y);
+					n.radius =1;
+					player.radius -= 1;
+					particles.push(n);
 			}
 			}
 			player.interval++;
+    }
+	function lineDistance( point1x, point2x,point1y,point2y )
+    {
+    var xs = 0;
+    var ys = 0;
+    xs = point2x - point1x;
+    xs = xs * xs;
+    ys = point2y - point1y;
+    ys = ys * ys;
+    return Math.sqrt( xs + ys );
     }
 }

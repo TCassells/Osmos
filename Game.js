@@ -5,9 +5,13 @@ this.addController = function()
   {
        var canvas = document.getElementById("myCanvas");
         var context = canvas.getContext("2d");
-window.addEventListener('mousedown', function(event) {
+		window.addEventListener('mousedown', function(event) {
+particleManager.down = true;
+ },false);
+window.addEventListener('mouseup', function(event) {
 particleManager.movePlayer(event.pageX ,event.pageY );
  },false);
+
  } 
  this.update = function()
 {
