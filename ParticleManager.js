@@ -1,5 +1,8 @@
 function ParticleManager()
 {
+this.win = false;
+this.lose = false;
+this.interval = 0;
 var canvas = document.getElementById("myCanvas");
 var ctx = canvas.getContext("2d");
  var player = new Player();
@@ -9,7 +12,7 @@ var W = 1500; var H = 700;
 var particles = [];
 for(var i = 0; i < 20; i++)
 {
-	particles.push(new Particle());
+	particles.push(new Particle(player.x,player.y,player.radius));
 }
 var x = 100; var y = 100;
 this.movePlayer= function(x,y)
@@ -29,6 +32,7 @@ if(this.down==true)
 }
 this.Draw = function()
 {
+this.win =  true;
   if(lineDistance(player.ax ,player.x,player.ay,player.y)<=player.radius)
 	{    player.vx=0;
          player.vy=0;
@@ -41,15 +45,20 @@ for(var t = 0; t < particles.length; t++)
 	 {
 	 if( player.radius >= p.radius&& p.radius >=1)
 	 {	
-	 player.radius +=1;
+	 player.radius += 3.14/player.radius;
 	 	p.radius -=  1;
 		
 	}
-	 else if(player.radius >6&& p.radius >=1)
+	 else if(player.radius >1&& p.radius >=1)
 	 {
-	 	p.radius +=  1;
+	 	p.radius +=   3.14/player.radius;
 		player.radius -=1;
      }
+	
+	 } 
+	 if(player.radius <1)
+	 {
+	 this.lose = true;
 	 }
 	 if(p.radius<0)
 		{
@@ -66,7 +75,7 @@ for(var t = 0; t < particles.length; t++)
 						{
 						 if(p.radius >= o.radius&& o.radius >=1)
 							 {
-								p.radius +=  1;
+								p.radius +=  3.14/p.radius;
 								 o.radius-= 1;
 								
 							 }
@@ -84,7 +93,10 @@ for(var t = 0; t < particles.length; t++)
 				p.interval = -100;
 			}
 		else
+		{
 			p.color = "rgba(255, 0, 0, 0.5)";
+			this.win =  false;
+			}
 			p.x += p.vx;
 			p.y += p.vy;
 		if(p.interval ==10)
@@ -97,7 +109,7 @@ for(var t = 0; t < particles.length; t++)
 					n.vx = - p.vx*Math.random()*3;
 					n.vy = -p.vy*Math.random()*3;
 					n.radius =1;
-					p.radius -= 1;
+					p.radius -= 3.14/p.radius;
 					particles.push(n);
 				}
 			}
@@ -108,7 +120,7 @@ for(var t = 0; t < particles.length; t++)
 		if( p.y +p.radius > H) p.vy = -0.5;
 		p.Draw();
 		}	
-            if(player.interval ==20-player.radius%4 &&player.radius > 5)
+            if(player.interval ==2 &&player.radius > 5)
 			{	
 		
 			 if(lineDistance(player.ax ,player.x,player.ay,player.y)>radius)
@@ -116,10 +128,10 @@ for(var t = 0; t < particles.length; t++)
 				var n = new Particle();
 					n.x = player.x-  (radius/2)*player.vx*(player.ax-player.x);
 					n.y = player.y- (radius/2)*player.vy*(player.ay-player.y);
-					n.vx = - (player.vx)*(player.ax-player.x) ;
-					n.vy = -player.vy*(player.ay-player.y);
+					n.vx = - (player.vx) *(player.ax-player.x)%2 ;
+					n.vy = -(player.vy)*(player.ay-player.y)%2;
 					n.radius =1;
-					player.radius -= 1;
+					player.radius -= 3.14/player.radius;
 					particles.push(n);
 			}
 			}

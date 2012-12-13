@@ -1,9 +1,14 @@
-function Particle()
+function Particle(x,y,radius)
 {
     var W = 1500; var H = 700;
 	this.radius = Math.random()*40+10;
 	this.x = this.radius +(Math.random()*W - this.radius);
 	this.y = this.radius +(Math.random()*H - this.radius);
+	while(this.x + this.radius > x- (radius*2) && this.x-this.radius < x+(radius*2)&& this.y + this.radius > y - (radius*2) && this.y - this.radius < y +(radius*2))
+	{
+	this.x = this.radius +(Math.random()*W - this.radius);
+	this.y = this.radius +(Math.random()*H - this.radius);
+    }			
 	this.interval = 0;
 	var dir =-1;
 	if(Math.random()*W > W/2)

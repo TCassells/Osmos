@@ -24,7 +24,7 @@ ctx.beginPath();
 		gradient.addColorStop(0.2, "blue");
 		gradient.addColorStop(0.3, this.color);
 		gradient.addColorStop(0.8, "green");
-		gradient.addColorStop(1, this.color);
+	//	gradient.addColorStop(1, this.color);
 		ctx.fillStyle = gradient;
 		ctx.arc(this.x, this.y, this.radius, Math.PI*2, false);
 		ctx.fill();
@@ -32,7 +32,7 @@ ctx.beginPath();
 		this.y += this.vy* (this.ay-this.y);
 		if(this.x - this.radius < 0 || this.x +this.radius > W)  this.vx = -this.vx;
 		if(this.y-this.radius  < 0 || this.y +this.radius  > H)  this.vy = -this.vy;
-		if(this.interval > 20)
+		if(this.interval > 2)
 		this.interval = 0;
 
 }
