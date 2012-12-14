@@ -3,6 +3,9 @@ function ParticleManager()
 this.win = false;
 this.lose = false;
 this.interval = 0;
+
+var loss = Audio("lose.wav");
+
 var canvas = document.getElementById("myCanvas");
 var ctx = canvas.getContext("2d");
  var player = new Player();
@@ -16,8 +19,10 @@ for(var i = 0; i < 20; i++)
 }
 var x = 100; var y = 100;
 this.movePlayer= function(x,y)
-{
+{	
 if(this.down==true)
+{
+if(x > 0 && x < W && y >0 && y < H)
 {
   player.ax =  x;
   player.ay =  y;
@@ -28,10 +33,12 @@ if(this.down==true)
    }
   this.down = false;
   }
+  }
 
 }
 this.Draw = function()
 {
+loss.pause();
 this.win =  true;
   if(lineDistance(player.ax ,player.x,player.ay,player.y)<=player.radius)
 	{    player.vx=0;
@@ -47,18 +54,21 @@ for(var t = 0; t < particles.length; t++)
 	 {	
 	 player.radius += 3.14/player.radius;
 	 	p.radius -=  1;
+	
 		
 	}
 	 else if(player.radius >1&& p.radius >=1)
 	 {
 	 	p.radius +=   3.14/player.radius;
 		player.radius -=1;
+		loss.play();
      }
 	
 	 } 
 	 if(player.radius <1)
 	 {
 	 this.lose = true;
+	 loss.pause();
 	 }
 	 if(p.radius<0)
 		{

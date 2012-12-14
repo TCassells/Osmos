@@ -13,17 +13,17 @@ this.inGame = true;
 	ctx.globalCompositeOperation = "lighter";  
         ctx.beginPath();
 		
-	var gradient = ctx.createRadialGradient((W/2), (H/2), 0, (W/2), (H/2), 200);
+	var gradient = ctx.createRadialGradient((W/4), (H/2), 0, (W/4), (H/2), 200);
 		gradient.addColorStop(0, "green");
 		gradient.addColorStop(0.4, "blue");
-	    gradient.addColorStop(0, "purple");
+	    gradient.addColorStop(1, "purple");
 		ctx.fillStyle = gradient;
-		ctx.arc((W/2), (H/2) , 200, Math.PI*2, false);
-		ctx.font = '80pt Calibri';
-		ctx.fillText(header,(W/4), (H/6));
+		ctx.arc((W/4), (H/2) , 200, Math.PI*2, false);
+		ctx.font = '100pt Calibri';
+		ctx.fillText(header,(W/2)-50, (H/6));
 		ctx.fill();	
-		ctx.font = '40pt Calibri';
-		ctx.fillText(text,(W/2)-50, H-50);
+		ctx.font = '60pt Calibri';
+		ctx.fillText(text,(W/2)+50, H/2);
 		ctx.fill();	
        ctx.closePath();
  }

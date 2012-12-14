@@ -29,7 +29,11 @@ game.addController();
 else
 {menu.draw("Osmos","Start");
 window.addEventListener('mousedown', function(event) {
+if(menu.inGame == false)
+{
 menu.inGame = true;
+game.start.play();
+}
  },false);
 
 }

@@ -1,15 +1,18 @@
 function Game() {
  var particleManager = new ParticleManager();
 var menu =  new Menu();
+this.start = Audio("gain.wav");
 this.addController = function()
   {
        var canvas = document.getElementById("myCanvas");
         var context = canvas.getContext("2d");
 		window.addEventListener('mousedown', function(event) {
+		
 particleManager.down = true;
  },false);
 window.addEventListener('mouseup', function(event) {
 particleManager.movePlayer(event.pageX ,event.pageY );
+
  },false);
 
  } 
@@ -47,12 +50,14 @@ if(particleManager.lose)
  menu.inGame = true;
  particleManager.lose =false;
  particleManager = new ParticleManager();
+ start.play();
  }
 if(particleManager.win)
 {
 particleManager = new ParticleManager();
 menu.inGame = true;
 particleManager.win= false;
+start.play();
 }
 }
  },false);

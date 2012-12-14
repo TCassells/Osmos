@@ -12,6 +12,7 @@ function Player(){
 	var b = 255;
 	this.interval = 0;
 	this.color = "rgba("+r+", "+g+", "+b+", 0.5)";
+	var bounce = Audio("bounce.wav");
 	
 this.Draw = function()
 {
@@ -30,8 +31,13 @@ ctx.beginPath();
 		ctx.fill();
 		this.x += this.vx* (this.ax-this.x);
 		this.y += this.vy* (this.ay-this.y);
-		if(this.x - this.radius < 0 || this.x +this.radius > W)  this.vx = -this.vx;
-		if(this.y-this.radius  < 0 || this.y +this.radius  > H)  this.vy = -this.vy;
+		if(this.x - this.radius < 0 || this.x +this.radius > W)
+		{ 
+		this.vx = -this.vx; 
+		bounce.play();}
+		if(this.y-this.radius  < 0 || this.y +this.radius  > H){ 
+		this.vy = -this.vy;
+		bounce.play();}
 		if(this.interval > 2)
 		this.interval = 0;
 
